@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
+import type { ReactNode } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import AppLayout from './components/AppLayout';
+import DashboardPage from './pages/DashboardPage';
+import SensorsPage from './pages/SensorsPage';
 
-function App() {
+export default function App() {
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
 
   useEffect(() => {
@@ -13,13 +17,39 @@ function App() {
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
-  // Jika belum login, tampilkan halaman Login
-  if (!token) {
-    return <LoginPage />;
-  }
+  const ProtectedRoute = ({ children }: { children: ReactNode }) => {
+    if (!token) {
+      return <Navigate to="/login" replace />;
+    }
+    return children;
+  };
 
-  // Jika sudah login, tampilkan Layout utama aplikasi
-  return <AppLayout />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Route Login */}
+        <Route 
+          path="/login" 
+          element={token ? <Navigate to="/dashboard" replace /> : <LoginPage />} 
+        />
+
+        {/* Route Utama dengan AppLayout sebagai pembungkus */}
+        <Route 
+          path="/" 
+          element={
+            <ProtectedRoute>
+              <AppLayout />
+            </ProtectedRoute>
+          }
+        >
+          {/* Default Route: otomatis ke /dashboard jika mengakses root (/) */}
+          <Route index element={<Navigate to="/dashboard" replace />} />
+          
+          {/* Halaman Anak / Child Routes */}
+          <Route path="dashboard" element={<DashboardPage />} />
+          <Route path="sensors" element={<SensorsPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
-
-export default App;

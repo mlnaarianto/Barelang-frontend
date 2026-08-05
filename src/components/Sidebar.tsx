@@ -1,12 +1,11 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 interface SidebarProps {
-  activeMenu: string;
-  setActiveMenu: (menu: string) => void;
   onLogout: () => void;
 }
 
-export default function Sidebar({ activeMenu, setActiveMenu, onLogout }: SidebarProps) {
+export default function Sidebar({ onLogout }: SidebarProps) {
   return (
     <aside className="w-64 bg-white text-slate-700 flex flex-col justify-between shadow-sm z-10">
       <div>
@@ -22,28 +21,32 @@ export default function Sidebar({ activeMenu, setActiveMenu, onLogout }: Sidebar
         
         <ul className="list-none p-4 m-0 flex flex-col gap-1">
           <li>
-            <button 
-              onClick={() => setActiveMenu('dashboard')}
-              className={`w-full text-left px-4 py-3 rounded-lg font-medium text-sm transition-colors cursor-pointer ${
-                activeMenu === 'dashboard' 
-                  ? 'bg-indigo-50 text-indigo-600 font-bold' 
-                  : 'text-slate-500 hover:bg-slate-50'
-              }`}
+            <NavLink 
+              to="/dashboard" 
+              className={({ isActive }) => 
+                `w-full block text-left px-4 py-3 rounded-lg font-medium text-sm transition-colors cursor-pointer ${
+                  isActive 
+                    ? 'bg-indigo-50 text-indigo-600 font-bold' 
+                    : 'text-slate-500 hover:bg-slate-50'
+                }`
+              }
             >
               <span className="mr-2">🏠</span> Dashboard
-            </button>
+            </NavLink>
           </li>
           <li>
-            <button 
-              onClick={() => setActiveMenu('sensors')}
-              className={`w-full text-left px-4 py-3 rounded-lg font-medium text-sm transition-colors cursor-pointer ${
-                activeMenu === 'sensors' 
-                  ? 'bg-indigo-50 text-indigo-600 font-bold' 
-                  : 'text-slate-500 hover:bg-slate-50'
-              }`}
+            <NavLink 
+              to="/sensors" 
+              className={({ isActive }) => 
+                `w-full block text-left px-4 py-3 rounded-lg font-medium text-sm transition-colors cursor-pointer ${
+                  isActive 
+                    ? 'bg-indigo-50 text-indigo-600 font-bold' 
+                    : 'text-slate-500 hover:bg-slate-50'
+                }`
+              }
             >
               <span className="mr-2">📡</span> Kelola Sensor
-            </button>
+            </NavLink>
           </li>
         </ul>
       </div>
