@@ -18,8 +18,16 @@ export default function LoginPage() {
         password,
       });
 
-      // Perbaikan: Ambil token dari dalam key .data.data.token
-      localStorage.setItem('token', response.data.data.token);
+      // Struktur response backend: { data: { message, token, username, role } }
+      const resData = response.data.data;
+
+      localStorage.setItem('token', resData.token);
+      localStorage.setItem('user', JSON.stringify({
+        username: resData.username,
+        name: resData.name,
+        role: resData.role,
+      }));
+
       setMessage('Login Berhasil! Mengalihkan...');
 
       setTimeout(() => {
