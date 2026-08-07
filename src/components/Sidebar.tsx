@@ -9,6 +9,7 @@ export default function Sidebar({ onLogout }: SidebarProps) {
   return (
     <aside className="w-64 bg-white text-slate-700 flex flex-col justify-between shadow-sm z-10">
       <div>
+        {/* Header Sidebar */}
         <div className="p-6 border-b border-slate-100 flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold">
             B
@@ -19,6 +20,7 @@ export default function Sidebar({ onLogout }: SidebarProps) {
           </div>
         </div>
         
+        {/* Menu Navigasi */}
         <ul className="list-none p-4 m-0 flex flex-col gap-1">
           <li>
             <NavLink 
@@ -48,9 +50,40 @@ export default function Sidebar({ onLogout }: SidebarProps) {
               <span className="mr-2">📡</span> Kelola Sensor
             </NavLink>
           </li>
+          {/* Menu Tambahan untuk RBAC */}
+          <li>
+            <NavLink 
+              to="/rbac" 
+              className={({ isActive }) => 
+                `w-full block text-left px-4 py-3 rounded-lg font-medium text-sm transition-colors cursor-pointer ${
+                  isActive 
+                    ? 'bg-indigo-50 text-indigo-600 font-bold' 
+                    : 'text-slate-500 hover:bg-slate-50'
+                }`
+              }
+            >
+              <span className="mr-2">🛡️</span> Kelola RBAC
+            </NavLink>
+          </li>
+          {/* Menu Tambahan untuk Role & Permission */}
+          <li>
+            <NavLink 
+              to="/roles-permissions" 
+              className={({ isActive }) => 
+                `w-full block text-left px-4 py-3 rounded-lg font-medium text-sm transition-colors cursor-pointer ${
+                  isActive 
+                    ? 'bg-indigo-50 text-indigo-600 font-bold' 
+                    : 'text-slate-500 hover:bg-slate-50'
+                }`
+              }
+            >
+              <span className="mr-2">🔐</span> Role & Permission
+            </NavLink>
+          </li>
         </ul>
       </div>
       
+      {/* Bagian Bawah Sidebar */}
       <div className="p-5">
         <button 
           onClick={onLogout} 

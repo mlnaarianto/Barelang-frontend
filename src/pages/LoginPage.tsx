@@ -18,16 +18,17 @@ export default function LoginPage() {
         password,
       });
 
-      localStorage.setItem('token', response.data.token);
+      // Perbaikan: Ambil token dari dalam key .data.data.token
+      localStorage.setItem('token', response.data.data.token);
       setMessage('Login Berhasil! Mengalihkan...');
 
       setTimeout(() => {
-        window.location.href = '/'; // Bersihkan hash URL jika ada
+        window.location.href = '/'; 
       }, 500);
 
     } catch (err: any) {
       setLoading(false);
-      setMessage(err.response?.data?.error || 'Login gagal, periksa kembali username atau password.');
+      setMessage(err.response?.data?.data?.error || err.response?.data?.error || 'Login gagal, periksa kembali username atau password.');
     }
   };
 
@@ -35,13 +36,11 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-white font-sans">
       <div className="bg-white p-10 rounded-xl shadow-xl w-full max-w-md border border-slate-200 box-border">
         
-        {/* Header Title */}
         <div className="text-center mb-8">
           <h2 className="text-2xl font-bold text-slate-900 mb-2">Weather API Batam</h2>
           <p className="text-slate-500 text-sm">Silakan masuk ke panel sistem</p>
         </div>
 
-        {/* Form Login */}
         <form onSubmit={handleLogin} className="flex flex-col gap-5">
           <div>
             <label className="block mb-2 text-sm font-medium text-slate-700">Username / Email</label>
@@ -80,7 +79,6 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {/* Feedback Message */}
         {message && (
           <div className={`mt-5 p-3 rounded-lg text-center text-xs font-medium ${
             message.includes('Berhasil') 

@@ -5,6 +5,8 @@ import LoginPage from './pages/LoginPage';
 import AppLayout from './components/AppLayout';
 import DashboardPage from './pages/DashboardPage';
 import SensorsPage from './pages/SensorsPage';
+import RbacPage from './pages/RbacPage'; // Tambahkan import ini
+import RolesPermissionsPage from './pages/RolesPermissionsPage'; // Tambahkan import ini
 
 export default function App() {
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
@@ -48,6 +50,12 @@ export default function App() {
           {/* Halaman Anak / Child Routes */}
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="sensors" element={<SensorsPage />} />
+          
+          {/* Rute baru untuk halaman RBAC ditambahkan di sini */}
+          <Route path="rbac" element={<RbacPage />} />
+
+          {/* Rute baru untuk halaman Role & Permission ditambahkan di sini */}
+          <Route path="roles-permissions" element={<RolesPermissionsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
