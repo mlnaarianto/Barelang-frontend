@@ -1,3 +1,13 @@
+/* 1. Impor Leaflet paling atas */
+@import 'leaflet/dist/leaflet.css';
+
+/* 2. Diikuti oleh Tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* 3. Tambahan khusus Leaflet (Opsional tapi disarankan) */
+/* Mencegah peta Leaflet menutupi elemen seperti dropdown/navbar Tailwind */
+.leaflet-container {
+  z-index: 10; 
+}

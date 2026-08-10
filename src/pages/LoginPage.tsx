@@ -23,6 +23,7 @@ export default function LoginPage() {
 
       localStorage.setItem('token', resData.token);
       localStorage.setItem('user', JSON.stringify({
+        id: resData.id,
         username: resData.username,
         name: resData.name,
         role: resData.role,
@@ -31,7 +32,7 @@ export default function LoginPage() {
       setMessage('Login Berhasil! Mengalihkan...');
 
       setTimeout(() => {
-        window.location.href = '/'; 
+        window.location.href = '/admin/dashboard'; 
       }, 500);
 
     } catch (err: any) {

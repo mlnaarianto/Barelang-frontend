@@ -4,9 +4,10 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import AppLayout from './components/AppLayout';
 import DashboardPage from './pages/DashboardPage';
-import SensorsPage from './pages/SensorsPage';
-import RbacPage from './pages/RbacPage'; // Tambahkan import ini
-import RolesPermissionsPage from './pages/RolesPermissionsPage'; // Tambahkan import ini
+import StationsPage from './pages/StationsPage'; 
+import WeatherPredictionsPage from './pages/WeatherPredictionsPage'; 
+import RbacPage from './pages/RbacPage'; 
+import RolesPermissionsPage from './pages/RolesPermissionsPage'; 
 
 export default function App() {
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
@@ -29,34 +30,55 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* ========================================== */}
+        {/* RUTE PUBLIK (Tanpa Login)                    */}
+        {/* ========================================== */}
+
+        {/* Default route saat pertama buka aplikasi -> langsung ke halaman publik */}
+        <Route 
+          path="/" 
+          element={<Navigate to="/public/weather" replace />} 
+        />
+
         {/* Route Login */}
         <Route 
           path="/login" 
-          element={token ? <Navigate to="/dashboard" replace /> : <LoginPage />} 
+          element={token ? <Navigate to="/admin/dashboard" replace /> : <LoginPage />} 
+        />
+        
+        {/* Route Publik untuk Masyarakat Umum (Standalone tanpa Sidebar Admin) */}
+        <Route 
+          path="/public/weather" 
+          element={<div className="p-4 md:p-8 bg-slate-50 min-h-screen"><WeatherPredictionsPage /></div>} 
         />
 
-        {/* Route Utama dengan AppLayout sebagai pembungkus */}
+        {/* ========================================== */}
+        {/* RUTE ADMIN TERPROTEKSI (Butuh Login)         */}
+        {/* Semua rute admin sekarang berada di bawah prefix /admin  */}
+        {/* ========================================== */}
         <Route 
-          path="/" 
+          path="/admin" 
           element={
             <ProtectedRoute>
               <AppLayout />
             </ProtectedRoute>
           }
         >
-          {/* Default Route: otomatis ke /dashboard jika mengakses root (/) */}
-          <Route index element={<Navigate to="/dashboard" replace />} />
+          {/* Default Route: otomatis ke /admin/dashboard */}
+          <Route index element={<Navigate to="/admin/dashboard" replace />} />
           
-          {/* Halaman Anak / Child Routes */}
           <Route path="dashboard" element={<DashboardPage />} />
-          <Route path="sensors" element={<SensorsPage />} />
+          <Route path="stations" element={<StationsPage />} />
           
-          {/* Rute baru untuk halaman RBAC ditambahkan di sini */}
+          {/* Rute Prediksi Cuaca khusus Admin (Berada di dalam Sidebar) */}
+          <Route path="weather-predictions" element={<WeatherPredictionsPage />} />
+          
           <Route path="rbac" element={<RbacPage />} />
-
-          {/* Rute baru untuk halaman Role & Permission ditambahkan di sini */}
           <Route path="roles-permissions" element={<RolesPermissionsPage />} />
         </Route>
+
+        {/* Fallback: path yang tidak dikenali -> balik ke halaman publik */}
+        <Route path="*" element={<Navigate to="/public/weather" replace />} />
       </Routes>
     </BrowserRouter>
   );

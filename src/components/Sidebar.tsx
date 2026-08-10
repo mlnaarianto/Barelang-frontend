@@ -15,7 +15,7 @@ export default function Sidebar({ onLogout }: SidebarProps) {
             B
           </div>
           <div>
-            <h3 className="m-0 text-base font-bold text-slate-900">BMKG Batam</h3>
+            <h3 className="m-0 text-base font-bold text-slate-900">AtmoIQ AI</h3>
             <span className="text-xs text-slate-500">Monitoring System</span>
           </div>
         </div>
@@ -24,7 +24,7 @@ export default function Sidebar({ onLogout }: SidebarProps) {
         <ul className="list-none p-4 m-0 flex flex-col gap-1">
           <li>
             <NavLink 
-              to="/dashboard" 
+              to="/admin/dashboard" 
               className={({ isActive }) => 
                 `w-full block text-left px-4 py-3 rounded-lg font-medium text-sm transition-colors cursor-pointer ${
                   isActive 
@@ -36,9 +36,11 @@ export default function Sidebar({ onLogout }: SidebarProps) {
               <span className="mr-2">🏠</span> Dashboard
             </NavLink>
           </li>
+          
+          {/* Menu Stasiun (Pengganti Sensor) */}
           <li>
             <NavLink 
-              to="/sensors" 
+              to="/admin/stations" 
               className={({ isActive }) => 
                 `w-full block text-left px-4 py-3 rounded-lg font-medium text-sm transition-colors cursor-pointer ${
                   isActive 
@@ -47,13 +49,30 @@ export default function Sidebar({ onLogout }: SidebarProps) {
                 }`
               }
             >
-              <span className="mr-2">📡</span> Kelola Sensor
+              <span className="mr-2">📍</span> Kelola Kecamatan/lokasi
             </NavLink>
           </li>
+
+          {/* Menu Hasil Prediksi LSTM */}
+          <li>
+            <NavLink 
+              to="/admin/weather-predictions" 
+              className={({ isActive }) => 
+                `w-full block text-left px-4 py-3 rounded-lg font-medium text-sm transition-colors cursor-pointer ${
+                  isActive 
+                    ? 'bg-indigo-50 text-indigo-600 font-bold' 
+                    : 'text-slate-500 hover:bg-slate-50'
+                }`
+              }
+            >
+              <span className="mr-2">📈</span> Data Prediksi AI
+            </NavLink>
+          </li>
+
           {/* Menu Tambahan untuk RBAC */}
           <li>
             <NavLink 
-              to="/rbac" 
+              to="/admin/rbac" 
               className={({ isActive }) => 
                 `w-full block text-left px-4 py-3 rounded-lg font-medium text-sm transition-colors cursor-pointer ${
                   isActive 
@@ -65,10 +84,11 @@ export default function Sidebar({ onLogout }: SidebarProps) {
               <span className="mr-2">🛡️</span> Kelola RBAC
             </NavLink>
           </li>
+
           {/* Menu Tambahan untuk Role & Permission */}
           <li>
             <NavLink 
-              to="/roles-permissions" 
+              to="/admin/roles-permissions" 
               className={({ isActive }) => 
                 `w-full block text-left px-4 py-3 rounded-lg font-medium text-sm transition-colors cursor-pointer ${
                   isActive 
